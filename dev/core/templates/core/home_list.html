@@ -1,23 +1,40 @@
-{% extends 'base.html' %}
 
 {% load crispy_forms_tags %}
+<head>
+
 
 {% block content %}
-<h1 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">Welcome back, {{ user.username }}</h1>
+<h1 style="text-align: right; padding-top: 1em; padding-bottom: 1em;">Welcome, {{ user.username }}</h1>
 
 {% block pubic-plist %}
-<h2 style="text-align: left">Public Projects:</h2>
-{% for proj in proj_set %}
-<li>{{ proj.description }}</li>
-{% endfor %}
+
 {% endblock %}
 
-{% block private-plist %}
-<h2 style="text-align: left">Public Projects:</h2>
-{% for proj in proj_set %}
-<li>{{ proj.description }}</li>
-{% endfor %}
-{% endblock %}
+
+<div class="sidebar" style = "height: 100%; 
+width: 140px;
+position: fixed;z-index: 1;
+top: 0; left: 0; background-color: #dcdcdc;
+overflow-x: hidden;
+padding-top: 20px ">
+  <a href="{% url 'projs' %}" style =  "padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-sixe: 40px;
+  color: black;
+  display: block;"> Projects </a>
+  <a href="{% url 'acts' %}" style =  "padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-sixe: 25px;
+  color: black;
+  display: block;"> Actions </a>
+  <a href="{% url 'files' %}"style =  "padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-sixe: 25px;
+  color: black;
+  display: block;"> Files</a> 
+</div>
+</head>
+
 
 <br></br>
 <div class="text-center">
