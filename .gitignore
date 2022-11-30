@@ -1,0 +1,12 @@
+# ignore virtual environment
+env/**
+
+# ignore all emacs related files
+*~
+*#
+
+# ignore migration folders
+**/migrations/**
+
+# ignore cache files
+**/__pycache__/**

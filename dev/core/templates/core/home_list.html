@@ -1,0 +1,20 @@
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1 style="text-align: left; padding-top: 1em; padding-bottom: 0em;">{{ user.username }}'s homepage</h1>
+
+{% block project-list %}
+<h2 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">Projects</h2>
+
+{% for proj in proj_set %}
+<p>{{ proj.description }}</p>
+{% endfor %}
+
+{% endblock %}
+
+<div class="text-center">
+  <a href="{% url 'proj' %}"><button type="button" class="btn btn-primary">Create New Project</button></a>
+</div>
+
+{% endblock content %}
