@@ -38,6 +38,14 @@ class Project(models.Model):
     files = models.ManyToManyField(File, verbose_name="Project files", blank=True) # need form to upload or choose file.
     tags = models.ManyToManyField(Tag, verbose_name="Project tags", blank=True)
     # See forms for manytomany field: https://medium.com/swlh/django-forms-for-many-to-many-fields-d977dec4b024
+
+    def get_user_list(self):
+        user_set = self.users.all()
+        return [user.username for user in user_set]
+
+    def get_tag_list(self):
+        tag_set = self.tags.all()
+        return [tag.name for tag in tag_set]
     
     
 class Action(models.Model):

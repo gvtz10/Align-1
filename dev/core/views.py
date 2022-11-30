@@ -115,11 +115,23 @@ class ActionView(View):
 
 
 class ProjectListView(View):
-    pass
+    template_name = 'core/proj_list.html'
+    
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        proj_set = user.project_set.all()
+        context = {
+            'user': user,
+            'proj_set': proj_set,
+            }
+        return render(request, self.template_name, context)
 
 
 class ActionListView(View):
-    pass
+    template_name = 'core/act_list.html'
+
+    def get(self, *arg, **kwargs):
+        pass
 
 
 class ProjectCreateView(CreateView):

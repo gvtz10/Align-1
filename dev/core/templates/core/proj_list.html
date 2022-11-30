@@ -1,10 +1,34 @@
+{% extends 'base.html' %}
 
 {% block content %}
 
-<h1 style="text-align: left; padding-top: 1em; padding-bottom: 0em;">{{ user.username }}'s project page</h1>
-<h2 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">Projects</h2>
-{% for proj in proj_set %}
-<li>{{ proj.description }}</li>
-{% endfor %}
+<h1 style="text-align: left; padding-top: 1em; padding-bottom: 0em;">Project overview:</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">No.</th>
+      <th scope="col">Description</th>
+      <th scope="col">Team members</th>
+      <th scope="col">Status</th>
+      <th scope="col">Tags</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for proj in proj_set %}
+    <tr>
+      <th scope="row">{{ proj.id }}</th>
+      <td>{{ proj.description }}</td>
+      <td>{{ proj.get_user_list }}</td>
+      <td>{{ proj.status }}</td>
+      <td>{{ proj.get_tag_list }}</td>
+      <td>
+        <a style="margin-right: 30px;" href="{% url 'proj-update' proj.id %}">Edit</a>
+        {# <a href="{% url 'proj-delete' proj.id %}">Remove</a> #}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 {% endblock content %}
