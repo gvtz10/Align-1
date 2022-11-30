@@ -8,9 +8,11 @@ from django.contrib.auth.models import User
     
 class File(models.Model):
     name = models.CharField("file name", max_length=64)
+    upload = models.FileField()
     is_proj = models.BooleanField("project file", default=False)
     is_act = models.BooleanField("action file", default=False)
     # is_proj and is_act cannot both be false
+
 
 class Tag(models.Model):
     name = models.CharField("tag name", max_length=32)
@@ -18,6 +20,7 @@ class Tag(models.Model):
     is_act = models.BooleanField("action tag", default=False)
     is_file = models.BooleanField("file tag", default=False)
     # is_proj, is_act, and is_file cannot all be false
+    
     
 class Project(models.Model):
     VISIBILITY_CHOICES = [
@@ -36,6 +39,7 @@ class Project(models.Model):
     tags = models.ManyToManyField(Tag, verbose_name="Project tags", blank=True)
     # See forms for manytomany field: https://medium.com/swlh/django-forms-for-many-to-many-fields-d977dec4b024
     
+    
 class Action(models.Model):
     VISIBILITY_CHOICES = [
         (True, "public"),
@@ -48,10 +52,10 @@ class Action(models.Model):
     description = models.TextField()
     visibility = models.BooleanField(default=False, choices=VISIBILITY_CHOICES)
     status = models.BooleanField(default=True, choices=STATUS_CHOICES)
-    start_date = models.DateField(blank=True)
-    start_time = models.TimeField(blank=True)
-    end_date = models.DateField(blank=True)
-    end_time = models.TimeField(blank=True)
+    start_date = models.DateField(null=True, blank=True)
+    start_time = models.TimeField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
     p_project = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name="parent project", null=True, blank=True)
     p_action = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="parent action", null=True, blank=True)
     files = models.ManyToManyField(File, verbose_name="Action files", blank=True) # form to upload or choose file

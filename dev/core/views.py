@@ -1,12 +1,18 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import (
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
+
+from django.contrib import messages
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 
 from .forms import NewUserForm, ProjectForm, ActionForm
-from django.contrib.auth import login, authenticate
-from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
-
-from django.contrib.auth.models import User
 from .models import Project, Action, File
 
 
@@ -52,7 +58,7 @@ class HomeView(View):
     template_name = 'core/home_list.html'
 
     def get(self, request, *args, **kwargs):
-        print("Get Home View!")
+        print("Home View\n================")
         print(request.GET)
         user = request.user
         proj_set = user.project_set.all()
@@ -64,8 +70,7 @@ class HomeView(View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        context = {
-            }
+        context = {}
         return render(request, self.template_name, context)
 
 
@@ -73,15 +78,13 @@ class ProjectView(View):
     template_name = 'core/proj_detail.html'
 
     def get(self, request, *args, **kwargs):
-        print("Get Project View!")
+        print("Project View\n================")
         print(request.GET)
         user = request.user
-        # proj_set = User.objects.get(id=user.id).project_set.all()
         proj_form = ProjectForm()
         context = {
             'user': user,
             'proj_form': proj_form,
-            # 'proj_set': proj_set,
             }
         return render(request, self.template_name, context)
 
@@ -93,11 +96,66 @@ class ProjectView(View):
 
 
 class ActionView(View):
-    template_name = 'core/act_list.html'
+    template_name = 'core/act_detail.html'
 
     def get(self, request, *args, **kwargs):
-        pass
+        user = request.user
+        act_form = ActionForm()
+        context = {
+            'user': user,
+            'act_form': act_form,
+            }
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        pass
+        form = ActionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+
+class ProjectListView(View):
+    pass
+
+
+class ActionListView(View):
+    pass
+
+
+class ProjectCreateView(CreateView):
+    form_class = ProjectForm
+    template_name = 'core/proj_new.html'
+    success_url = reverse_lazy('home')
+
+
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'core/proj_update.html'
+    success_url = reverse_lazy('home')
+
+
+class ProjectDeleteView(DeleteView):
+    model = Project
+    template_name = 'core/proj_delete.html'
+    success_url = reverse_lazy('home')
+
+
+class ActionCreateView(CreateView):
+    form_class = ActionForm
+    template_name = 'core/act_new.html'
+    success_url = reverse_lazy('home')
+
+
+class ActionUpdateView(UpdateView):
+    model = Action
+    form_class = ActionForm
+    template_name = 'core/act_update.html'
+    success_url = reverse_lazy('home')
+
+
+class ActionDeleteView(DeleteView):
+    model = Action
+    template_name = 'core/act_delete.html'
+    success_url = reverse_lazy('home')
 

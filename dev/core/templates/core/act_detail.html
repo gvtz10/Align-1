@@ -3,16 +3,14 @@
 
 {% block content %}
 
-{% url 'home' as home %}
-
 <div class="container py-5">
-  <h1>Project detail:</h1>
+  <h1>Action detail:</h1>
   <form method="POST">
     {% csrf_token %}
-    {{ proj_form|crispy }}
+    {{ act_form|crispy }}
     <button class="btn btn-primary" type="submit">Submit</button>
   </form>
-  <p class="text-center">Go back to <a href="{{ home }}">homepage</a> without saving.</p>
+  <p class="text-center">Go back to <a href="home"> without saving.</p>
 </div>
 
 {% endblock content %}

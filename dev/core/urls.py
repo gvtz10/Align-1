@@ -5,7 +5,15 @@ urlpatterns = [
     path('home', views.HomeView.as_view(), name='home'),
     path('signup', views.user_signup, name='signup'),
     path('login', views.user_login, name='login'),
-    path('proj', views.ProjectView.as_view(), name='proj'),
-    path('act', views.ProjectView.as_view(), name='act'),
+    path('projs', views.ProjectListView.as_view(), name='projs'),
+    path('acts', views.ActionListView.as_view(), name='acts'),
+    path('proj/new/', views.ProjectCreateView.as_view(), name='proj-new'),
+    path('proj/<int:pk>/', views.ProjectUpdateView.as_view(), name='proj-detail'),
+    path('proj/<int:pk>/update/', views.ProjectUpdateView.as_view(), name='proj-update'),
+    path('proj/<int:pk>/delete/', views.ProjectDeleteView.as_view(), name='proj-delete'),
+    path('act/new/', views.ActionCreateView.as_view(), name='act-new'),
+    path('act/<int:pk>/', views.ActionUpdateView.as_view(), name='act-detail'),
+    path('act/<int:pk>/update/', views.ActionUpdateView.as_view(), name='act-update'),
+    path('act/<int:pk>/delete/', views.ActionDeleteView.as_view(), name='act-delete'),
 ]
 
